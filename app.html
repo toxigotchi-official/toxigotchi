@@ -450,13 +450,12 @@
       background: var(--white); 
       border: var(--border); 
       box-shadow: var(--shadow); 
-      padding: 16px 8px 12px; 
+      padding: 14px 6px 10px; 
       text-align: center; 
       position: relative; 
       overflow: hidden;
       width: 100%;
-      box-sizing: border-box;
-    } 
+    }
     /* small "FOCUS" / "BREAK" label top-left of timer box */ 
     .timer-box::before { 
       content: attr(data-label); 
@@ -472,17 +471,20 @@
     } 
     #timer-display { 
       font-family: var(--font-hero); 
-      font-size: clamp(54px, 17vw, 84px); 
+      font-size: clamp(42px, 14vw, 84px); 
       line-height: 1; 
       color: var(--ink); 
-      letter-spacing: 3px; 
-      transition: color .25s; 
-      display: inline-block;
-      max-width: 100%;
+      letter-spacing: 2px; 
+      transition: color .25s;
+
+      display: block;
+      width: 100%;
+      text-align: center;
+
+      white-space: nowrap;
       overflow: hidden;
-      text-overflow: clip;
-      word-wrap: break-word;
-    } 
+    }
+
     #timer-display.danger { 
       color: var(--red); 
       animation: pulse-timer .55s infinite; 
@@ -1086,44 +1088,36 @@
     @media screen and (max-width: 480px) {
       /* Fix header layout for mobile */
       .header {
-        grid-template-columns: 1fr auto;
-        grid-template-areas: 
-          "brand shame-btn"
-          "login streak";
-        gap: 0;
-      }
+        grid-template-columns: 1fr auto auto;
+        align-items: center;
+        }
+
+        .header__brand {
+          padding: 12px;
+          border-right: none;
+        }
+
+        #streak-counter {
+          font-size: 8px;
+          padding: 8px 10px;
+          border-left: var(--border);
+          border-right: none;
+        }
+
+        #login-btn-header {
+          font-size: 7px;
+          padding: 8px 10px;
+          border-left: var(--border);
+        }
+
+        #shame-btn {
+          font-size: 7px;
+          padding: 8px 10px;
+          border-left: var(--border);
+          white-space: nowrap;
+        }
+
       
-      .header__brand {
-        grid-area: brand;
-        padding: 12px 12px;
-        border-right: var(--border);
-      }
-      
-      #streak-counter {
-        grid-area: streak;
-        border-right: none;
-        border-left: var(--border);
-        border-top: var(--border);
-        justify-content: center;
-        padding: 8px 8px;
-        font-size: 8px;
-      }
-      
-      #login-btn-header {
-        grid-area: login;
-        border-left: var(--border);
-        border-top: var(--border);
-        padding: 8px 8px;
-        font-size: 7px;
-        text-align: center;
-      }
-      
-      #shame-btn {
-        grid-area: shame-btn;
-        border-left: var(--border);
-        padding: 8px 12px;
-        font-size: 7px;
-      }
 
       /* Fix streak widget card */
       #streak-widget-card {
@@ -1346,9 +1340,10 @@
         padding: 16px 16px 40px;
       }
       
-      .card {
-        width: min(480px, 94vw);
-      }
+      .card{
+      max-width:540px;
+      width:100%;
+    }
       
       .pet-stage {
         min-height: 70px;
