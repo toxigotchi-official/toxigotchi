@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en"><head> <meta charset="UTF-8" /> <meta name="viewport" content="width=device-width, initial-scale=1.0" /> <title>ToxiGotchi — Focus or Else</title> 
+<!DOCTYPE html><html lang="en"><head> <meta charset="UTF-8" /> <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes" /> <title>ToxiGotchi — Focus or Else</title> 
   
   <!-- Firebase SDK (CDN version) -->
   <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
@@ -453,6 +453,9 @@
       padding: 16px 8px 12px; 
       text-align: center; 
       position: relative; 
+      overflow: hidden;
+      width: 100%;
+      box-sizing: border-box;
     } 
     /* small "FOCUS" / "BREAK" label top-left of timer box */ 
     .timer-box::before { 
@@ -474,7 +477,11 @@
       color: var(--ink); 
       letter-spacing: 3px; 
       transition: color .25s; 
-      display: inline-block; 
+      display: inline-block;
+      max-width: 100%;
+      overflow: hidden;
+      text-overflow: clip;
+      word-wrap: break-word;
     } 
     #timer-display.danger { 
       color: var(--red); 
@@ -489,7 +496,8 @@
     .health-wrapper { 
       display: flex; 
       flex-direction: column; 
-      gap: 4px; 
+      gap: 4px;
+      width: 100%;
     } 
     .health-label-row { 
       display: flex; 
@@ -1072,7 +1080,307 @@
     #close-shame-btn:active { 
       transform: translate(5px,5px); 
       box-shadow: 0 0 0 var(--ink); 
-    } 
+    }
+
+    /* ===== MOBILE RESPONSIVE FIXES ===== */
+    @media screen and (max-width: 480px) {
+      /* Fix header layout for mobile */
+      .header {
+        grid-template-columns: 1fr auto;
+        grid-template-areas: 
+          "brand shame-btn"
+          "login streak";
+        gap: 0;
+      }
+      
+      .header__brand {
+        grid-area: brand;
+        padding: 12px 12px;
+        border-right: var(--border);
+      }
+      
+      #streak-counter {
+        grid-area: streak;
+        border-right: none;
+        border-left: var(--border);
+        border-top: var(--border);
+        justify-content: center;
+        padding: 8px 8px;
+        font-size: 8px;
+      }
+      
+      #login-btn-header {
+        grid-area: login;
+        border-left: var(--border);
+        border-top: var(--border);
+        padding: 8px 8px;
+        font-size: 7px;
+        text-align: center;
+      }
+      
+      #shame-btn {
+        grid-area: shame-btn;
+        border-left: var(--border);
+        padding: 8px 12px;
+        font-size: 7px;
+      }
+
+      /* Fix streak widget card */
+      #streak-widget-card {
+        padding: 12px 10px;
+        gap: 8px;
+      }
+      
+      .streak-widget__fire {
+        font-size: 36px;
+      }
+      
+      .streak-widget__title {
+        font-size: 7px;
+        letter-spacing: 2px;
+      }
+      
+      .streak-widget__body {
+        font-size: 9px;
+        line-height: 1.4;
+      }
+
+      /* Fix timer box - ensure it stays within yellow panel */
+      .timer-box {
+        padding: 14px 4px 10px;
+      }
+      
+      .timer-box::before {
+        font-size: 6px;
+        padding: 2px 6px;
+      }
+      
+      #timer-display {
+        font-size: clamp(48px, 15vw, 72px);
+        display: block;
+      }
+
+      /* Fix session tracker */
+      #session-tracker {
+        font-size: 7px;
+        letter-spacing: 2px;
+        flex-wrap: wrap;
+        padding: 7px 4px 5px;
+      }
+
+      /* Fix health bar container */
+      .health-wrapper {
+        width: 100%;
+      }
+      
+      #health-container {
+        height: 28px !important;
+      }
+      
+      #health-text {
+        font-size: 8px !important;
+      }
+      
+      .health-label {
+        font-size: 6px;
+        letter-spacing: 2px;
+      }
+
+      /* Fix pet stage */
+      .pet-stage {
+        min-height: 100px;
+        padding: 4px 0 2px;
+      }
+      
+      #pet-image {
+        font-size: 70px !important;
+      }
+
+      /* Fix roast box */
+      .roast-prompt {
+        padding: 10px 10px 12px;
+        gap: 6px;
+      }
+      
+      .roast-prompt::before {
+        font-size: 12px;
+      }
+      
+      #roast-box {
+        font-size: 10px;
+        line-height: 1.5;
+      }
+
+      /* Fix action buttons */
+      .btn-row {
+        gap: 8px;
+      }
+      
+      button {
+        padding: 12px 4px;
+        font-size: 9px;
+        letter-spacing: 0.5px;
+      }
+
+      /* Fix footer */
+      .footer {
+        font-size: 7px;
+        letter-spacing: 1px;
+        padding-top: 8px;
+      }
+      
+      #status-label {
+        font-size: 6px;
+        padding: 2px 6px;
+      }
+
+      /* Fix content panel padding */
+      .content-panel {
+        padding: 16px 12px 18px;
+      }
+
+      /* Fix setup screen inputs */
+      .setup__row {
+        gap: 6px;
+      }
+      
+      .setup__input {
+        font-size: 12px;
+        padding: 8px 10px;
+      }
+      
+      .setup__label {
+        font-size: 7px;
+        letter-spacing: 2px;
+      }
+      
+      #lock-in-btn {
+        padding: 14px;
+      }
+
+      /* Fix apology input */
+      #apology-input {
+        font-size: 10px;
+        padding: 10px 12px;
+      }
+
+      /* Fix user profile */
+      #user-profile {
+        padding: 6px 10px;
+        font-size: 8px;
+        flex-wrap: wrap;
+        gap: 6px;
+      }
+      
+      #logout-btn {
+        padding: 3px 8px;
+        font-size: 6px;
+      }
+
+      /* Fix current goal display */
+      #current-goal-display {
+        font-size: 8px;
+        padding: 8px 10px;
+        white-space: normal;
+        word-break: break-word;
+        line-height: 1.4;
+      }
+    }
+
+    /* Extra small devices (below 360px) */
+    @media screen and (max-width: 360px) {
+      .header {
+        grid-template-columns: 1fr;
+        grid-template-areas: 
+          "brand"
+          "shame-btn"
+          "login"
+          "streak";
+      }
+      
+      #streak-counter {
+        border-top: var(--border);
+        border-left: none;
+      }
+      
+      #login-btn-header {
+        border-top: var(--border);
+        border-left: none;
+      }
+      
+      #shame-btn {
+        border-top: var(--border);
+        border-left: none;
+        text-align: center;
+      }
+      
+      .streak-widget__fire {
+        font-size: 30px;
+      }
+      
+      .streak-widget__text {
+        min-width: 0;
+      }
+      
+      #timer-display {
+        font-size: 48px;
+      }
+      
+      .btn-row {
+        grid-template-columns: 1fr;
+      }
+      
+      .setup__row {
+        grid-template-columns: 1fr;
+        gap: 10px;
+      }
+      
+      #pet-image {
+        font-size: 60px !important;
+      }
+    }
+
+    /* Fix for landscape mode on mobile */
+    @media screen and (max-height: 500px) and (orientation: landscape) {
+      body {
+        padding: 16px 16px 40px;
+      }
+      
+      .card {
+        width: min(480px, 94vw);
+      }
+      
+      .pet-stage {
+        min-height: 70px;
+      }
+      
+      #pet-image {
+        font-size: 50px !important;
+      }
+      
+      .btn-row {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+
+    /* Ensure content panel contains everything */
+    .content-panel {
+      overflow: hidden;
+      width: 100%;
+    }
+
+    /* Fix for the boards button being out of yellow box */
+    #shame-btn {
+      position: relative;
+      z-index: 10;
+    }
+
+    /* Ensure streak counter doesn't overflow */
+    #streak-counter {
+      max-width: 100%;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
   </style>
 </head>
 <body> 
@@ -1639,46 +1947,48 @@
     /* ──────────────────────────────────────────────────────
        AUTHENTICATION
     ────────────────────────────────────────────────────── */
+    loginBtn.addEventListener('click', () => {
+      auth.signInWithPopup(provider)
+        .then(result => {
+          console.log('Logged in:', result.user);
+        })
+        .catch(error => {
+          console.error('Login error:', error);
+        });
+    });
+
     /* ──────────────────────────────────────────────────────
-   LOGOUT HANDLER - FIXED
-────────────────────────────────────────────────────── */
-logoutBtn.addEventListener('click', async () => {
-  try {
-    // Disable button immediately
-    logoutBtn.disabled = true;
-    logoutBtn.textContent = '⏻';
-    
-    // Visual feedback
-    setRoast('Logging out... See you next time.');
-    
-    // Clear timer if running
-    if (isTimerRunning) {
-      clearInterval(timerInterval);
-      isTimerRunning = false;
-    }
-    
-    // Stop any vibrations
-    if (vibrationInterval) {
-      clearInterval(vibrationInterval);
-      vibrationInterval = null;
-    }
-    
-    // Sign out from Firebase
-    await auth.signOut();
-    
-    // Clear all local data
-    currentUser = null;
-    userData = null;
-    
-    // Force redirect with timestamp to prevent caching
-    window.location.href = 'index.html?_=' + Date.now();
-    
-  } catch (error) {
-    console.error('Logout error:', error);
-    // Emergency redirect
-    window.location.replace('index.html');
-  }
-});
+       LOGOUT HANDLER
+    ────────────────────────────────────────────────────── */
+    logoutBtn.addEventListener('click', async () => {
+      try {
+        logoutBtn.disabled = true;
+        logoutBtn.textContent = '⏻';
+        
+        setRoast('Logging out... See you next time.');
+        
+        if (isTimerRunning) {
+          clearInterval(timerInterval);
+          isTimerRunning = false;
+        }
+        
+        if (vibrationInterval) {
+          clearInterval(vibrationInterval);
+          vibrationInterval = null;
+        }
+        
+        await auth.signOut();
+        
+        currentUser = null;
+        userData = null;
+        
+        window.location.href = 'index.html?_=' + Date.now();
+        
+      } catch (error) {
+        console.error('Logout error:', error);
+        window.location.replace('index.html');
+      }
+    });
 
     /* ──────────────────────────────────────────────────────
        SESSION SETUP
